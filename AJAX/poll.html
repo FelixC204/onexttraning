@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Poll</title>
+</head>
+<body>
+    <div id="poll">
+        <h3>Bạn thích cơm hay phở hơn?</h3>
+        <form>
+            <label for="">Cơm</label>
+            <input type="radio" name="vote" value="0" onclick="getVotes(this.value)">
+            <label for="">Phở</label>
+            <input type="radio" name="vote" value="1" onclick="getVotes(this.value)">
+        </form>
+    </div>
+    <script>
+        function getVotes(int){
+            if(window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest();
+            }else{
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    document.getElementById("poll").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "poll_vote.php?vote=" + int, true);
+            xmlhttp.send();
+        }
+    </script>
+</body>
+</html>
